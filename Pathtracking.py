@@ -17,7 +17,7 @@ from CubicSpline import CubicSpline2D
 
 NX = 4  # x = x, y, v, yaw
 NU = 2  # a = [accel, steer]
-T = 5  # horizon length
+T = 7  # horizon length
 
 # mpc parameters
 R = np.diag([0.01, 0.01])  # input cost matrix
@@ -46,8 +46,8 @@ WHEEL_WIDTH = 0.2  # [m]
 TREAD = 0.7  # [m]
 WB = 2.5  # [m]
 
-MAX_STEER = np.deg2rad(45.0)  # maximum steering angle [rad]
-MAX_DSTEER = np.deg2rad(30.0)  # maximum steering speed [rad/s]
+MAX_STEER = np.deg2rad(60.0)  # maximum steering angle [rad]
+MAX_DSTEER = np.deg2rad(45.0)  # maximum steering speed [rad/s]
 MAX_SPEED = 55.0 / 3.6  # maximum speed [m/s]
 MIN_SPEED = -20.0 / 3.6  # minimum speed [m/s]
 MAX_ACCEL = 1.0  # maximum accel [m/ss]
@@ -450,28 +450,6 @@ def do_simulation(cx, cy, cyaw, ck, sp, dl, initial_state):
 def calc_speed_profile(cx, cy, cyaw, target_speed):
 
     speed_profile = [target_speed] * len(cx)
-    direction = 1.0  # forward
-
-    # Set stop point
-    for i in range(len(cx) - 1):
-        dx = cx[i + 1] - cx[i]
-        dy = cy[i + 1] - cy[i]
-
-        move_direction = math.atan2(dy, dx)
-
-        if dx != 0.0 and dy != 0.0:
-            dangle = abs(pi_2_pi(move_direction - cyaw[i]))
-            if dangle >= math.pi / 4.0:
-                direction = -1.0
-            else:
-                direction = 1.0
-
-        if direction != 1.0:
-            speed_profile[i] = - target_speed
-        else:
-            speed_profile[i] = target_speed
-
-    speed_profile[-1] = 0.0
 
     return speed_profile
 
