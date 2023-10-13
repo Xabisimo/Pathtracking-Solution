@@ -352,7 +352,7 @@ def do_simulation(cx, cy, cyaw, ck, sp, dl, initial_state):
     dl: course tick [m]
 
     """
-
+    goal = [cx[0], cy[5]]
     
 
     state = initial_state
@@ -401,11 +401,9 @@ def do_simulation(cx, cy, cyaw, ck, sp, dl, initial_state):
         t.append(time)
         d.append(di)
         a.append(ai)
-        if x==0 and y==5: 
-            print("Goal")
-            state.v = 0.0
+        if abs(state.x - goal[0]) < 0.35 and abs(state.y - goal[1]) < 0.35:
+            print("Goal reached")
             break
-       
 
         if show_animation:  # pragma: no cover
             plt.cla()
