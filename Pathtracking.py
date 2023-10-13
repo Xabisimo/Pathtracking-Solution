@@ -340,26 +340,6 @@ def calc_ref_trajectory(state, cx, cy, cyaw, ck, sp, dl, pind):
     return xref, ind, dref
 
 
-def check_goal(state, goal, tind, nind):
-
-    # check goal
-    dx = state.x - goal[0]
-    dy = state.y - goal[1]
-    d = math.hypot(dx, dy)
-
-    isgoal = (d <= GOAL_DIS)
-
-    if abs(tind - nind) >= 5:
-        isgoal = False
-
-    isstop = (abs(state.v) <= STOP_SPEED)
-
-    if isgoal and isstop:
-        return True
-
-    return False
-
-
 def do_simulation(cx, cy, cyaw, ck, sp, dl, initial_state):
     """
     Simulation
@@ -373,10 +353,11 @@ def do_simulation(cx, cy, cyaw, ck, sp, dl, initial_state):
 
     """
 
-    goal = [cx[5], cy[5]]
+    
 
     state = initial_state
-
+    
+            
     # initial yaw compensation
     if state.yaw - cyaw[0] >= math.pi:
         state.yaw -= math.pi * 2.0
@@ -420,11 +401,11 @@ def do_simulation(cx, cy, cyaw, ck, sp, dl, initial_state):
         t.append(time)
         d.append(di)
         a.append(ai)
-
-        if check_goal(state, goal, target_ind, len(cx)):
-            sp=STOP_SPEED
+        if x==0 and y==5: 
             print("Goal")
+            state.v = 0.0
             break
+       
 
         if show_animation:  # pragma: no cover
             plt.cla()
@@ -479,8 +460,8 @@ def get_switch_back_course(dl):
     ay = [0.0, 0.0, 20.0, 35.0, 20.0]
     cx, cy, cyaw, ck, s = CubicSpline2D.calc_spline_course(
         ax, ay, ds=dl)
-    ax = [35.0, 10.0, 0.0, 0.0]
-    ay = [20.0, 30.0, 5.0, 0.0]
+    ax = [35.0, 10.0, 0.0,0.0]
+    ay = [20.0, 30.0, 5.0,0.0]
     cx2, cy2, cyaw2, ck2, s2 = CubicSpline2D.calc_spline_course(
         ax, ay, ds=dl)
     cyaw2 = [i - math.pi for i in cyaw2]
@@ -529,39 +510,7 @@ def main():
         plt.show()
 
 
-def main2():
-    print(__file__ + " start!!")
-
-    dl = 1.0  # course tick
-    cx, cy, cyaw, ck = get_straight_course3(dl)
-
-    sp = calc_speed_profile(cx, cy, cyaw, TARGET_SPEED)
-
-    initial_state = State(x=cx[0], y=cy[0], yaw=0.0, v=0.0)
-
-    t, x, y, yaw, v, d, a = do_simulation(
-        cx, cy, cyaw, ck, sp, dl, initial_state)
-
-    if show_animation:  # pragma: no cover
-        plt.close("all")
-        plt.subplots()
-        plt.plot(cx, cy, "-r", label="spline")
-        plt.plot(x, y, "-g", label="tracking")
-        plt.grid(True)
-        plt.axis("equal")
-        plt.xlabel("x[m]")
-        plt.ylabel("y[m]")
-        plt.legend()
-
-        plt.subplots()
-        plt.plot(t, v, "-r", label="speed")
-        plt.grid(True)
-        plt.xlabel("Time [s]")
-        plt.ylabel("Speed [kmh]")
-
-        plt.show()
-
 
 if __name__ == '__main__':
     main()
-    # main2()
+    
