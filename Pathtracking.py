@@ -29,7 +29,7 @@ STOP_SPEED = 0.5 / 3.6  # stop speed
 MAX_TIME = 70.0  # max simulation time
 
 # iterative paramter
-MAX_ITER = 3  # Max iteration
+MAX_ITER = 30  # Max iteration
 DU_TH = 0.1  # iteration finish param
 
 TARGET_SPEED = 10.0 / 3.6  # [m/s] target speed
@@ -49,7 +49,7 @@ WB = 2.5  # [m]
 MAX_STEER = np.deg2rad(60.0)  # maximum steering angle [rad]
 MAX_DSTEER = np.deg2rad(45.0)  # maximum steering speed [rad/s]
 MAX_SPEED = 55.0 / 3.6  # maximum speed [m/s]
-MIN_SPEED = -20.0 / 3.6  # minimum speed [m/s]
+MIN_SPEED = 0.0 / 3.6  # minimum speed [m/s]
 MAX_ACCEL = 1.0  # maximum accel [m/ss]
 
 show_animation = True
