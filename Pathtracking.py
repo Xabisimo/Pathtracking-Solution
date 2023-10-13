@@ -16,7 +16,7 @@ sys.path.append(str(pathlib.Path(__file__).parent.parent.parent))
 from CubicSpline import CubicSpline2D
 NX = 4  # x = x, y, v, yaw
 NU = 2  # a = [accel, steer]
-T = 5  # horizon length
+T = 7 # horizon length
 
 # mpc parameters
 R = np.diag([0.01, 0.01])  # input cost matrix
@@ -24,8 +24,8 @@ Rd = np.diag([0.01, 1.0])  # input difference cost matrix
 Q = np.diag([1.0, 1.0, 0.5, 0.5])  # state cost matrix
 Qf = Q  # state final matrix
 GOAL_DIS = 1.5  # goal distance
-STOP_SPEED = 0.5 / 3.6  # stop speed
-MAX_TIME = 500.0  # max simulation time
+STOP_SPEED = 3 / 3.6  # stop speed
+MAX_TIME = 50.0  # max simulation time
 
 # iterative paramter
 MAX_ITER = 3  # Max iteration
@@ -48,7 +48,7 @@ WB = 2.5  # [m]
 MAX_STEER = np.deg2rad(60.0)  # maximum steering angle [rad]
 MAX_DSTEER = np.deg2rad(45.0)  # maximum steering speed [rad/s]
 MAX_SPEED = 55.0 / 3.6  # maximum speed [m/s]
-MIN_SPEED = -20.0 / 3.6  # minimum speed [m/s]
+MIN_SPEED = 0.0 / 3.6  # minimum speed [m/s]
 MAX_ACCEL = 1.0  # maximum accel [m/ss]
 
 show_animation = True
