@@ -45,8 +45,8 @@ WHEEL_WIDTH = 0.2  # [m]
 TREAD = 0.7  # [m]
 WB = 2.5  # [m]
 
-MAX_STEER = np.deg2rad(45.0)  # maximum steering angle [rad]
-MAX_DSTEER = np.deg2rad(30.0)  # maximum steering speed [rad/s]
+MAX_STEER = np.deg2rad(60.0)  # maximum steering angle [rad]
+MAX_DSTEER = np.deg2rad(45.0)  # maximum steering speed [rad/s]
 MAX_SPEED = 55.0 / 3.6  # maximum speed [m/s]
 MIN_SPEED = -20.0 / 3.6  # minimum speed [m/s]
 MAX_ACCEL = 1.0  # maximum accel [m/ss]
@@ -373,7 +373,7 @@ def do_simulation(cx, cy, cyaw, ck, sp, dl, initial_state):
 
     """
 
-    goal = [cx[1], cy[7]]
+    goal = [cx[0], cy[0]]
 
     state = initial_state
 
@@ -466,7 +466,7 @@ def calc_speed_profile(cx, cy, cyaw, target_speed):
                 direction = 1.0
 
         if direction != 1.0:
-            speed_profile[i] = - target_speed
+            speed_profile[i] = target_speed
         else:
             speed_profile[i] = target_speed
 
