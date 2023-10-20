@@ -384,5 +384,5 @@ def main_2d():  # pragma: no cover
 
 
 if __name__ == '__main__':
-    # main_1d()
+    main_1d()
     main_2d()
